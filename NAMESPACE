@@ -1,0 +1,21 @@
+# The NAMESPACE file is used to explicitly define which functions should be imported into the package’s namespace and
+# which functions the package exposes (i.e. exports) to other packages
+# see http://docs.renjin.org/en/latest/writing-renjin-extensions.html for details about the syntax
+
+export(Markdown)
+export(md.add)
+export(md.clear)
+export(as.character.Markdown)
+export(md.table)
+export(md.imgPlot)
+export(md.imgFile)
+export(md.imgUrl)
+export(md.content)
+export(md.asHtml)
+
+exportClasses(Markdown)
+
+import(methods)
+
+importClass(se.alipsa.r2md.FileEncoder)
+importClass(se.alipsa.r2md.Md2Html)
