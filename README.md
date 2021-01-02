@@ -56,7 +56,7 @@ df <- data.frame(employee, salary, startdate, endDate)
 md.add(df)
 ```
 
-`r md.content()` will equal:
+`md.content()` will equal:
 ```
 
 employee | salary | startdate | endDate
@@ -66,7 +66,7 @@ Peter Smith | 23400 | 2018-03-25 | 2020-04-12 12:10:13
 Jane Doe | 26800 | 2017-03-14 | 2020-10-06 10:00:05
 
 ```
-...and `r md.asHtml()` will equal:
+...and `md.asHtml()` will equal:
 ```html
 <table>
 <thead>
