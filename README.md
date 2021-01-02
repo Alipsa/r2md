@@ -1,5 +1,5 @@
 # r2md
-A Renjin R package that converts R objects and functions into markdown text
+A Renjin R package that converts R objects and functions into markdown text or html
 
 ## Example usages:
 
@@ -9,14 +9,15 @@ library("se.alipsa:r2md")
 md.clear()
 md.add("# Hello")
 ```
-`md.content()` will equal `# Hello\n`
+`md.content()` (which return the markdown as a string (character vector) will equal `# Hello\n`
 
 ### Chained add
 ```r
 library("se.alipsa:r2md")
 md.clear()
 md.add("# Hello2")$add("Some text")$add("- bullet")
-print(md.content())
+# convert the markdown to html and print it
+print(md.asHtml())
 ```
 will result in
 ```html
@@ -29,6 +30,7 @@ will result in
 
 ### Adding a data.frame
 ```r
+library("se.alipsa:r2md")
 employee <- c('John Doe','Peter Smith','Jane Doe')
 salary <- c(21000, 23400, 26800)
 startdate <- as.Date(c('2013-11-1','2018-3-25','2017-3-14'))
@@ -37,7 +39,7 @@ df <- data.frame(employee, salary, startdate, endDate)
 md.add(df)
 ```
 
-`r md.content()` will equal
+`r md.content()` will equal:
 ```
 
 employee | salary | startdate | endDate
@@ -47,7 +49,7 @@ Peter Smith | 23400 | 2018-03-25 | 2020-04-12 12:10:13
 Jane Doe | 26800 | 2017-03-14 | 2020-10-06 10:00:05
 
 ``` 
-and `r md.asHtml` will equal:
+...and `r md.asHtml()` will equal:
 ```html
 <table>
 <thead>
