@@ -28,6 +28,7 @@ test.mdText <- function() {
   md.clear()
   md.add("# Hello2")$add("Some text")$add("- bullet")
   assertThat(md.content(), equalTo("# Hello2\nSome text\n- bullet\n"))
+  assertThat(md.asHtml(), equalTo("<h1>Hello2</h1>\n<p>Some text</p>\n<ul>\n<li>bullet</li>\n</ul>\n"))
 }
 
 test.dataFrameToTable <- function() {
@@ -50,6 +51,19 @@ test.dataFrameToTable <- function() {
     "Peter Smith | 23400 | 2018-03-25 | 2020-04-12 12:10:13\n",
     "Jane Doe | 26800 | 2017-03-14 | 2020-10-06 10:00:05\n")
   ))
+  assertThat(md.renderHtml(content), equalTo("<table>
+<thead>
+<tr><th>employee</th><th>salary</th><th>startdate</th><th>endDate</th></tr>
+</thead>
+<tbody>
+<tr><td>John Doe</td><td>21000</td><td>2013-11-01</td><td>2020-01-10 00:00:00</td></tr>
+<tr><td>Peter Smith</td><td>23400</td><td>2018-03-25</td><td>2020-04-12 12:10:13</td></tr>
+<tr><td>Jane Doe</td><td>26800</td><td>2017-03-14</td><td>2020-10-06 10:00:05</td></tr>
+</tbody>
+</table>
+"))
+
+
   md <- Markdown$new()
   md$add("# A title")$lf()
   md$add(42)

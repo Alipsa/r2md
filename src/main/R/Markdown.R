@@ -145,10 +145,18 @@ md.content <- function() {
 }
 
 md.asHtml <- function() {
+  .getMd2html()$render(.r2mdEnv$md$getContent())
+}
+
+.getMd2html <- function() {
   checkVar()
   if (!exists("md2html", envir = .r2mdEnv)) {
     md2html <- Md2Html$new()
-    assign("md2html", md2html, .r2mdEnv)
+    assign("md2html", md2html, envir = .r2mdEnv)
   }
-  .r2mdEnv$md2html$render(.r2mdEnv$md$getContent())
+  .r2mdEnv$md2html
+}
+
+md.renderHtml <- function(mdText) {
+  .getMd2html()$render(mdText)
 }

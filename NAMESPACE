@@ -12,6 +12,7 @@ export(md.imgFile)
 export(md.imgUrl)
 export(md.content)
 export(md.asHtml)
+export(md.renderHtml)
 
 exportClasses(Markdown)
 
