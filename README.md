@@ -12,6 +12,13 @@ md.add("# Hello")
 `md.content()` (which return the markdown as a string (character vector)) will equal `# Hello\n`
 
 ### Chained add
+Assuming the following markdown:
+
+#### Hello2
+Some text
+- bullet
+
+This is how you can create that with r2md:
 ```r
 library("se.alipsa:r2md")
 md.clear()
@@ -27,13 +34,18 @@ will result in
 <li>bullet</li>
 </ul>
 ```
-Whereas the underlying markdown will be
-
-#### Hello2
-Some test
-- bullet
 
 ### Adding a data.frame
+
+The following table:
+
+employee | salary | startdate | endDate
+--- | --- | --- | ---
+John Doe | 21000 | 2013-11-01 | 2020-01-10 00:00:00
+Peter Smith | 23400 | 2018-03-25 | 2020-04-12 12:10:13
+Jane Doe | 26800 | 2017-03-14 | 2020-10-06 10:00:05
+
+...can be created as a data.frame in R and converted to markdown: 
 ```r
 library("se.alipsa:r2md")
 employee <- c('John Doe','Peter Smith','Jane Doe')
@@ -53,16 +65,7 @@ John Doe | 21000 | 2013-11-01 | 2020-01-10 00:00:00
 Peter Smith | 23400 | 2018-03-25 | 2020-04-12 12:10:13
 Jane Doe | 26800 | 2017-03-14 | 2020-10-06 10:00:05
 
-``` 
-
-i.e. 
-
-employee | salary | startdate | endDate
---- | --- | --- | ---
-John Doe | 21000 | 2013-11-01 | 2020-01-10 00:00:00
-Peter Smith | 23400 | 2018-03-25 | 2020-04-12 12:10:13
-Jane Doe | 26800 | 2017-03-14 | 2020-10-06 10:00:05
-
+```
 ...and `r md.asHtml()` will equal:
 ```html
 <table>
