@@ -5,7 +5,8 @@ The approach is similar to [htmlcreator](https://github.com/perNyfelt/htmlcreato
 whereas this package renders r objects into markdown which can then be exported to html (or pdf or whatever).
 
 r2md is an integral part in the support for the *mdr* file format which is somewhat
-similar to *rmd* (r markdown) in the sense that it enables enhancing markdown with r code but
+similar to *rmd* (r markdown) in the sense that it enables enhancing markdown with r code to support
+[reproducible research](https://en.wikipedia.org/wiki/Reproducibility#Reproducible_research_method) but
 where rmd relies on knitr and "magic rules" for what and how to render r code, mdr puts the responsibility 
 to generate markdown text from r code on you - and using r2md this is quite a pleasant 
 experience giving you lots of control and power. 
