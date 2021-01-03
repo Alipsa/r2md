@@ -8,7 +8,11 @@ r2md is an integral part in the support for the *mdr* file format which is somew
 similar to *rmd* (r markdown) in the sense that it enables enhancing markdown with r code but
 where rmd relies on knitr and "magic rules" for what and how to render r code, mdr puts the responsibility 
 to generate markdown text from r code on you - and using r2md this is quite a pleasant 
-experience giving you lots of control and power.
+experience giving you lots of control and power. 
+
+The [mdr2html](https://github.com/perNyfelt/mdr2html) package can process mdr files
+and render it as html. This is used in the [Munin](https://github.com/perNyfelt/munin)
+reports server to support mdr files as one of its supported report formats.
 
 ## Example usages:
 
