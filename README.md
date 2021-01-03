@@ -6,7 +6,7 @@ whereas this package renders r objects into markdown which can then be exported 
 
 r2md is an integral part in the support for the *mdr* file format which is somewhat
 similar to *rmd* (r markdown) in the sense that it enables enhancing markdown with r code to support
-[reproducible research](https://en.wikipedia.org/wiki/Reproducibility#Reproducible_research_method) but
+[reproducible research](https://en.wikipedia.org/wiki/Reproducibility#Reproducible_research_method); but
 where rmd relies on knitr and "magic rules" for what and how to render r code, mdr puts the responsibility 
 to generate markdown text from r code on you - and using r2md this is quite a pleasant 
 experience giving you lots of control and power. 
@@ -170,3 +170,13 @@ md.add(
 )
 ```
 
+# Main 3:rd party libraries used
+
+- [Renjin](https://www.renjin.org/)
+    The R implementation for the JVM for which this extension (package) is for.
+- [commons-io](https://commons.apache.org/proper/commons-io/)
+    Used for some IO tasks such as downloading the content of an URL
+- [Flexmark](https://github.com/vsch/flexmark-java)
+    Used to render markdown into html
+  
+See the [pom.xml](https://github.com/perNyfelt/r2md/blob/main/pom.xml) for more details.
