@@ -1,6 +1,15 @@
 # r2md
 A Renjin R package that converts R objects and functions into markdown text or html
 
+The approach is similar to [htmlcreator](https://github.com/perNyfelt/htmlcreator) which renders r objects directly into html
+whereas this package renders r objects into markdown which can then be exported to html (or pdf or whatever).
+
+r2md is an integral part in the support for the *mdr* file format which is somewhat
+similar to *rmd* (r markdown) in the sense that it enables enhancing markdown with r code but
+where rmd relies on knitr and "magic rules" for what and how to render r code, mdr puts the responsibility 
+to generate markdown text from r code on you - and using r2md this is quite a pleasant 
+experience giving you lots of control and power.
+
 ## Example usages:
 
 ### use md.add() to build your markdown document
@@ -140,7 +149,7 @@ md.content() will be: `![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE0AAAB
 ```
 ### Plots
 
-The embedded technique is used for plots. Behind the scenes the plot is exported to a file which is
+The embedded technique is also used for plots. Behind the scenes the plot is exported to a png file which is
 then embedded using the same technique as for md.imgEmbed(). Note thet the function name for the plot
 (e.g. plot, barplot, hist etc.) is *separated* from the arguments of the function.
 Here is an example of a barplot:
