@@ -3,7 +3,7 @@ library('se.alipsa:r2md')
 
 str.beginsWith <- function(expected) {
   if(is.na(expected)) {
-    stop("expected is NA, beginsWith NA makes no sense")
+    stop("expected is NA, str.beginsWith NA makes no sense")
   }
   function(actual) {
     startsWith(as.character(actual), as.character(expected))
@@ -12,7 +12,7 @@ str.beginsWith <- function(expected) {
 
 str.endsWith <- function(expected) {
   if(is.na(expected)) {
-    stop("expected is NA, beginsWith NA makes no sense")
+    stop("expected is NA, str.endsWith NA makes no sense")
   }
   function(actual) {
     endsWith(as.character(actual), as.character(expected))
@@ -38,7 +38,7 @@ test.dataFrameToTable <- function() {
   endDate <- as.POSIXct(c('2020-01-10 00:00:00', '2020-04-12 12:10:13', '2020-10-06 10:00:05'), tz='UTC' )
   df <- data.frame(employee, salary, startdate, endDate)
   ## hidden will not be added as an attribute since it is not named
-  content <- md.table(df, list(id="myTable", "hidden"))
+  content <- md.table(df, attr=list(id="myTable", "hidden"))
   #outfile <- paste0(getwd(),"/outfile.md")
   #cat(content, file=outfile)
   #print(paste("test.dataFrameToTable, wrote", outfile))
@@ -49,9 +49,11 @@ test.dataFrameToTable <- function() {
     "--- | --- | --- | ---\n",
     "John Doe | 21000 | 2013-11-01 | 2020-01-10 00:00:00\n",
     "Peter Smith | 23400 | 2018-03-25 | 2020-04-12 12:10:13\n",
-    "Jane Doe | 26800 | 2017-03-14 | 2020-10-06 10:00:05\n")
+    "Jane Doe | 26800 | 2017-03-14 | 2020-10-06 10:00:05\n",
+    "{id=\"myTable\"}\n")
   ))
-  assertThat(md.renderHtml(content), equalTo("<table>
+  assertThat(md.renderHtml(content), equalTo(
+"<table id=\"myTable\">
 <thead>
 <tr><th>employee</th><th>salary</th><th>startdate</th><th>endDate</th></tr>
 </thead>
@@ -87,7 +89,7 @@ test.dataFrameToTable <- function() {
 
 test.plotToImage <- function() {
   md.clear()
-  md.add("# Barplot")$lf()
+  md.add("# Barplot")
   md.add(
     barplot,
     table(mtcars$vs, mtcars$gear),
@@ -122,10 +124,31 @@ test.plotToImage <- function() {
   assertThat(md.asHtml(), str.endsWith("\" alt=\"\" /></p>\n"))
 }
 
+test.links <- function() {
+  md.clear()
+  md.add("[Google](http://www.google.se)")
+  assertThat(md.asHtml(), equalTo("<p><a href=\"http://www.google.se\">Google</a></p>\n"))
+}
+
 test.imgUrl <- function() {
   md.clear()
-  md.add(md.imgUrl("/common/style.css", list("id" = "mystyle", "class" = "image")))
-  assertThat(md.content(), equalTo("![](/common/style.css)\n"))
+  md.add(md.imgUrl("https://upload.wikimedia.org/wikipedia/commons/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg", alt="Tree"))
+  assertThat(md.content(), equalTo("![Tree](https://upload.wikimedia.org/wikipedia/commons/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg)\n"))
+
+
+  md.clear()
+  md.add(md.imgUrl("https://upload.wikimedia.org/wikipedia/commons/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg", attr=list("id" = "mystyle", "class" = "image")))
+  assertThat(md.content(), equalTo("![](https://upload.wikimedia.org/wikipedia/commons/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg){id=\"mystyle\" class=\"image\"}\n"))
+  assertThat(md.asHtml(), equalTo(
+"<p><img src=\"https://upload.wikimedia.org/wikipedia/commons/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg\" alt=\"\" id=\"mystyle\" class=\"image\" /></p>\n"
+  ))
+}
+
+test.imgEmbed <- function() {
+  md.clear()
+  md.add(md.imgEmbed("https://upload.wikimedia.org/wikipedia/commons/d/dd/Accounting-icon.png"))
+  assertThat(md.content(), equalTo("![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE0AAABNCAAAAADGYrZsAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH1gkeAAohA+PvmwAAAMhJREFUWMPtmFEOwiAQRBlKxSt4/zOaolbGDw1qIyEkm0jS2fSnKX3ZwsvSBScfo0eYQsj3if5wjAF+goNnJtdlSbc1LZdzWrNrBuarMwsA2ZDmnWXsiMbdfCksaaGYVx/DftrnK6DsFW1rSKX+9RnYoLHPQa2pqmXD3v5ShrqYoT+ButEw3QFhOm+zaW7Z1BCa0vLANNUQ0fZK4x9yo1ZBtG4aNW+iiSbaj3/ycTsj6qRxhNzw1R2CzwuvTeV9U55w00yiDAPdA+74PJ7jCTFiAAAAAElFTkSuQmCC)\n"))
+  assertThat(md.asHtml(), equalTo("<p><img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE0AAABNCAAAAADGYrZsAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH1gkeAAohA+PvmwAAAMhJREFUWMPtmFEOwiAQRBlKxSt4/zOaolbGDw1qIyEkm0jS2fSnKX3ZwsvSBScfo0eYQsj3if5wjAF+goNnJtdlSbc1LZdzWrNrBuarMwsA2ZDmnWXsiMbdfCksaaGYVx/DftrnK6DsFW1rSKX+9RnYoLHPQa2pqmXD3v5ShrqYoT+ButEw3QFhOm+zaW7Z1BCa0vLANNUQ0fZK4x9yo1ZBtG4aNW+iiSbaj3/ycTsj6qRxhNzw1R2CzwuvTeV9U55w00yiDAPdA+74PJ7jCTFiAAAAAElFTkSuQmCC\" alt=\"\" /></p>\n"))
 }
 
 test.matrix <- function() {

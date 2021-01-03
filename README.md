@@ -80,7 +80,79 @@ Jane Doe | 26800 | 2017-03-14 | 2020-10-06 10:00:05
 </table>
 ```
 
-### Images
+### Links
+Adding links is just as expected: i.e. [Google](http://www.google.se) can be created
 
+```r
+md.clear()
+md.add("[Google](http://www.google.se)")
+```
+... and when redered as html it will result in
+
+```html
+<p><a href="http://www.google.se">Google</a></p>
+
+```
+
+### Images
+An image such as:
+
+![Tree](https://upload.wikimedia.org/wikipedia/commons/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg)
+
+can be referenced using 
+```r
+md.clear()
+md.add("[Tree](https://upload.wikimedia.org/wikipedia/commons/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg)")
+```
+or, alternatively:
+
+```r
+md.clear()
+md.add(md.imgUrl("https://upload.wikimedia.org/wikipedia/commons/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg", alt="Tree"))
+```
+This latter form is useful if you want to add attributes e.g:
+
+```r
+md.clear()
+md.add(md.imgUrl("https://upload.wikimedia.org/wikipedia/commons/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg", attr=list(id = "mystyle", class = "image")))
+```
+md.content() will give you
+`![](https://upload.wikimedia.org/wikipedia/commons/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg){id = 'mystyle', class = 'image'}\n`
+
+...and md.asHtml() will result in
+```html
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Ash_Tree_-_geograph.org.uk_-_590710.jpg" alt="" id="mystyle" class="image" /></p>
+
+```
+
+If you want to embed the image content in the file itself (e.g. to create self contained single html files)
+you can use md.imgEmbed(fileNameOrUrl) to convert the file or url content to a base64 string, e.g:
+```r
+md.clear()
+md.add(md.imgEmbed("https://upload.wikimedia.org/wikipedia/commons/d/dd/Accounting-icon.png"))
+```
+md.content() will be: `![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE0AAABNCAAAAADGYrZsAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH1gkeAAohA+PvmwAAAMhJREFUWMPtmFEOwiAQRBlKxSt4/zOaolbGDw1qIyEkm0jS2fSnKX3ZwsvSBScfo0eYQsj3if5wjAF+goNnJtdlSbc1LZdzWrNrBuarMwsA2ZDmnWXsiMbdfCksaaGYVx/DftrnK6DsFW1rSKX+9RnYoLHPQa2pqmXD3v5ShrqYoT+ButEw3QFhOm+zaW7Z1BCa0vLANNUQ0fZK4x9yo1ZBtG4aNW+iiSbaj3/ycTsj6qRxhNzw1R2CzwuvTeV9U55w00yiDAPdA+74PJ7jCTFiAAAAAElFTkSuQmCC)\n`
+
+...and md.asHtml() will be: 
+```html
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE0AAABNCAAAAADGYrZsAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH1gkeAAohA+PvmwAAAMhJREFUWMPtmFEOwiAQRBlKxSt4/zOaolbGDw1qIyEkm0jS2fSnKX3ZwsvSBScfo0eYQsj3if5wjAF+goNnJtdlSbc1LZdzWrNrBuarMwsA2ZDmnWXsiMbdfCksaaGYVx/DftrnK6DsFW1rSKX+9RnYoLHPQa2pqmXD3v5ShrqYoT+ButEw3QFhOm+zaW7Z1BCa0vLANNUQ0fZK4x9yo1ZBtG4aNW+iiSbaj3/ycTsj6qRxhNzw1R2CzwuvTeV9U55w00yiDAPdA+74PJ7jCTFiAAAAAElFTkSuQmCC" alt="" /></p>
+
+```
 ### Plots
+
+The embedded technique is used for plots. Behind the scenes the plot is exported to a file which is
+then embedded using the same technique as for md.imgEmbed(). Note thet the function name for the plot
+(e.g. plot, barplot, hist etc.) is *separated* from the arguments of the function.
+Here is an example of a barplot:
+
+```r
+md.clear()
+md.add("# Barplot")
+md.add(
+  barplot,
+  table(mtcars$vs, mtcars$gear),
+  main="Car Distribution by Gears and VS",
+  col=c("darkblue","red")
+)
+```
 

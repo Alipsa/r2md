@@ -10,22 +10,27 @@ Markdown <- setRefClass(
     },
 
     add = function(prime, ...) {
-      klass <- class(prime)
-      if (klass == "function") {
+      if (is.function(prime)) {
         mdString <- md.imgPlot(prime, ...)
-      } else if (klass == "data.frame") {
+      } else if (is.data.frame(prime)) {
         mdString <- ""
         if (!endsWith(content, "\n\n")) {
           mdString <- "\n"
         }
         mdString <- paste0(mdString, md.table(prime, ...))
-      } else if (klass == "matrix") {
+      } else if (is.matrix(prime)) {
         mdString <- ""
         if (!endsWith(content, "\n\n")) {
           mdString <- "\n"
         }
         mdString <- paste0(mdString, md.table(as.data.frame(prime), ...))
-      } else {
+      } else if (is.table(prime)) {
+        mdString <- ""
+        if (!endsWith(content, "\n\n")) {
+          mdString <- "\n"
+        }
+        mdString <- paste0(mdString, md.table(as.data.frame(as.array(prime)), ...))
+      }  else {
         mdString <- paste0(as.character(prime), collapse = "")
       }
       content <<- paste0(content, mdString, "\n")
@@ -98,6 +103,13 @@ setMethod('md.add', signature("data.frame"),
   }
 )
 
+setMethod('md.add', signature("table"),
+          function(x, ...) {
+            checkVar()
+            .r2mdEnv$md$add(x, ...)
+          }
+)
+
 setMethod('md.add', signature("matrix"),
   function(x, ...) {
     checkVar()
@@ -159,4 +171,14 @@ md.asHtml <- function() {
 
 md.renderHtml <- function(mdText) {
   .getMd2html()$render(mdText)
+}
+
+extAttributes <- function(attr, endString="") {
+  if (!is.list(attr)) {
+    return("")
+  }
+  # we drop all list item that are not named so if you want to add an attribute like hidden, you need to do hidden="hidden"
+  attr <- attr[names(attr) != ""]
+  htmlattr <- paste(paste0(names(attr), '="', unlist(attr), '"'), collapse = " ")
+  return(paste0("{", htmlattr, "}", endString))
 }
