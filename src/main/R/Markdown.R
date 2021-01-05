@@ -132,6 +132,7 @@ md.new <- function(content=NULL, ...) {
   if (!is.null(content)) {
     md.add(content, ...)
   }
+  .r2mdEnv$md
 }
 
 md.clear <- function() {

@@ -189,3 +189,12 @@ test.asCharacter <- function() {
 
   assertThat(paste0(md.getInstance(), "\n"), equalTo("# Title\n\n"))
 }
+
+test.md.new <- function() {
+  md.new(paste("As stated before, 2 + 5 * pi ≈", round(2 + 5 * pi)))
+  assertThat(md.content(), equalTo("As stated before, 2 + 5 * pi ≈ 18\n"))
+
+
+  md.new()$add(paste("As stated before, 2 + 5 * pi ≈", round(2 + 5 * pi)))
+  assertThat(md.content(), equalTo("As stated before, 2 + 5 * pi ≈ 18\n"))
+}
