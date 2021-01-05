@@ -2,9 +2,14 @@
 # which functions the package exposes (i.e. exports) to other packages
 # see http://docs.renjin.org/en/latest/writing-renjin-extensions.html for details about the syntax
 
+import(methods)
+importClass(se.alipsa.r2md.FileEncoder)
+importClass(se.alipsa.r2md.Md2Html)
+
 export(Markdown)
 export(md.add)
 export(md.clear)
+export(md.new)
 export(as.character.Markdown)
 export(md.table)
 export(md.imgPlot)
@@ -13,10 +18,7 @@ export(md.imgUrl)
 export(md.content)
 export(md.asHtml)
 export(md.renderHtml)
+export(md.getInstance)
 
 exportClasses(Markdown)
 
-import(methods)
-
-importClass(se.alipsa.r2md.FileEncoder)
-importClass(se.alipsa.r2md.Md2Html)

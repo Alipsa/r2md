@@ -182,3 +182,10 @@ test.matrix <- function() {
 </table>
 "))
 }
+
+test.asCharacter <- function() {
+  md.clear()
+  assertThat(as.character(md.add("# Title")), equalTo("# Title\n"))
+
+  assertThat(paste0(md.getInstance(), "\n"), equalTo("# Title\n\n"))
+}

@@ -127,10 +127,18 @@ setMethod('md.add', signature("function"),
   }
 )
 
+md.new <- function(content=NA, ...) {
+  md.clear()
+  if (!all(is.na(content))) {
+    md.add(content, ...)
+  }
+}
+
 md.clear <- function() {
   checkVar()
   .r2mdEnv$md <- Markdown$new()
   #assign("html", html, envir = .GlobalEnv)
+  .r2mdEnv$md
 }
 
 setMethod('as.vector', signature("Markdown"),
@@ -167,6 +175,11 @@ md.asHtml <- function() {
     assign("md2html", md2html, envir = .r2mdEnv)
   }
   .r2mdEnv$md2html
+}
+
+md.getInstance <- function() {
+  checkVar()
+  .r2mdEnv$md
 }
 
 md.renderHtml <- function(mdText) {
