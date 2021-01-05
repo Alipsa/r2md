@@ -127,9 +127,9 @@ setMethod('md.add', signature("function"),
   }
 )
 
-md.new <- function(content=NA, ...) {
+md.new <- function(content=NULL, ...) {
   md.clear()
-  if (!all(is.na(content))) {
+  if (!is.null(content)) {
     md.add(content, ...)
   }
 }

@@ -1,4 +1,4 @@
-md.imgPlot <- function(plotFunction, ..., alt="", attr=NA) {
+md.imgPlot <- function(plotFunction, ..., alt="", attr=NULL) {
   outFile <- tempfile("plot", fileext = ".png")
   png(outFile)
   # alt
@@ -10,13 +10,13 @@ md.imgPlot <- function(plotFunction, ..., alt="", attr=NA) {
   paste0("![", alt, "](", imgContent, ")", extAttributes(attr))
 }
 
-md.imgEmbed <- function(fileNameOrUrl, alt="", attr=NA) {
+md.imgEmbed <- function(fileNameOrUrl, alt="", attr=NULL) {
   imgContent <- FileEncoder$contentAsBase64(fileNameOrUrl)
   # TODO, handle additional attributes
   paste0("![", alt, "](", imgContent, ")", extAttributes(attr))
 }
 
-md.imgUrl <- function(url, alt="", attr=NA) {
+md.imgUrl <- function(url, alt="", attr=NULL) {
   # TODO, handle additional attributes
   paste0("![", alt, "](", url, ")", extAttributes(attr))
 }
