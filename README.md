@@ -17,6 +17,15 @@ reports server to support mdr files as one of its supported report formats.
 
 ## Example usages:
 
+add the dependency to your dependency manager e.g.
+```xml
+<dependency>
+    <groupId>se.alipsa</groupId>
+    <artifactId>r2md</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+
 ### use md.add() to build your markdown document
 ```r
 library("se.alipsa:r2md")
@@ -180,3 +189,8 @@ md.add(
     Used to render markdown into html
   
 See the [pom.xml](https://github.com/perNyfelt/r2md/blob/main/pom.xml) for more details.
+
+# Version history
+
+### 1.0, 2021-Jan-08
+Initial version. 
