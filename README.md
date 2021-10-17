@@ -164,7 +164,7 @@ md.content() will be: `![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE0AAAB
 ### Plots
 
 The embedded technique is also used for plots. Behind the scenes the plot is exported to a png file which is
-then embedded using the same technique as for md.imgEmbed(). Note thet the function name for the plot
+then embedded using the same technique as for md.imgEmbed(). Note that the function name for the plot
 (e.g. plot, barplot, hist etc.) is *separated* from the arguments of the function.
 Here is an example of a barplot:
 
@@ -191,6 +191,9 @@ md.add(
 See the [pom.xml](https://github.com/perNyfelt/r2md/blob/main/pom.xml) for more details.
 
 # Version history
+
+### 1.0.1
+- update junit and maven enforcer plugin versions.
 
 ### 1.0, 2021-Jan-08
 Initial version. 
