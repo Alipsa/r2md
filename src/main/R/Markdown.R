@@ -30,9 +30,15 @@ Markdown <- setRefClass(
           mdString <- "\n"
         }
         mdString <- paste0(mdString, md.table(as.data.frame(as.array(prime)), ...))
-      }  else {
+      } else {
         mdString <- paste0(as.character(prime), collapse = "")
       }
+      content <<- paste0(content, mdString, "\n")
+      invisible(.self)
+    },
+
+    addPlot = function(func, ...) {
+      mdString <- md.imgPlotComplex(func, ...)
       content <<- paste0(content, mdString, "\n")
       invisible(.self)
     },
@@ -126,6 +132,16 @@ setMethod('md.add', signature("function"),
     .r2mdEnv$md$add(x, ...)
   }
 )
+
+md.addPlot <- function(x, ...) {
+  if (!is.call(substitute(x))) {
+    # this is not a 100% guarantee that the code plock is a plot but we want the flexibility to
+    # call ggplot2, lattice etc. so cannot do better than this check
+    stop(paste("first argument is not an anonymous code block, this does not look correct"))
+  }
+  checkVar()
+  .r2mdEnv$md$addPlot(x, ...)
+}
 
 md.new <- function(content=NULL, ...) {
   md.clear()

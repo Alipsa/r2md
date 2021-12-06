@@ -110,7 +110,7 @@ Adding links is just as expected: i.e. [Google](http://www.google.se) can be cre
 md.clear()
 md.add("[Google](http://www.google.se)")
 ```
-... and when redered as html it will result in
+... and when rendered as html it will result in
 
 ```html
 <p><a href="http://www.google.se">Google</a></p>
@@ -179,6 +179,17 @@ md.add(
 )
 ```
 
+However, there is an alternative way to plot, which is using the md.addPlot function. This function gives you
+more flexibility. It takes an anonymous code block `{ }` as the argument where you add all the plotting functions you need. 
+All additional argument goes to the `png()` function. Here is an example:
+
+```r
+  md.addPlot({
+    plot(mtcars$mpg ~ mtcars$hp)
+    abline(h = mean(mtcars$mpg))
+  })
+```
+
 # Main 3:rd party libraries used
 
 - [Renjin](https://www.renjin.org/)
@@ -193,6 +204,7 @@ See the [pom.xml](https://github.com/perNyfelt/r2md/blob/main/pom.xml) for more 
 # Version history
 
 ### 1.0.1
+- add md.addPlot to allow more flexibility
 - update junit and maven enforcer plugin versions.
 
 ### 1.0, 2021-Jan-08

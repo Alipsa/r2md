@@ -6,7 +6,7 @@
 
     <groupId>se.alipsa</groupId>
     <artifactId>r2md</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <name>Renjin markdown content creator</name>
     <description>Renjin R package to create markdown from R objects and functions</description>
@@ -45,7 +45,7 @@
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>5.8.1</version>
+                <version>5.8.2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
