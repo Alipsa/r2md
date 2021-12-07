@@ -35,7 +35,7 @@ public class Md2Html {
   public String render(Object content) {
     //System.out.println(content.getClass());
     if (content instanceof StringArrayVector) {
-      render(((StringArrayVector) content).asString());
+      return render(((StringArrayVector) content).asString());
     }
     return render(String.valueOf(content));
   }

@@ -206,6 +206,8 @@ See the [pom.xml](https://github.com/perNyfelt/r2md/blob/main/pom.xml) for more 
 ### 1.0.1
 - add md.addPlot to allow more flexibility
 - update junit and maven enforcer plugin versions.
+- Fix bug in md.imgEmbed for external resources, add additional tests
+- Fix bug in getting content from a StringArrayVector
 
 ### 1.0, 2021-Jan-08
 Initial version. 

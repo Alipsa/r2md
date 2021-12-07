@@ -10,6 +10,9 @@ import com.vladsch.flexmark.util.data.MutableDataSet;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -55,7 +58,7 @@ public class MdRenderCapabilitiesTest {
   }
 
   @Test
-  public void testImgEmbedded() {
+  public void testImgEmbedded() throws IOException, URISyntaxException {
     String base64Img = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAUCAYAAACAl21KAAAABHNCSVQICAgIfAhkiAAABHRJREFUOI0FwUtv2wQAwPG_X7HzdhI3ydokbdcHbZdqTwZFPLRpEhKgsQtIm8QZceMDcNj34Mh1t0lsQhpiTDtMq8ZQ29F2XZsuafNsmsRNnNixze8nfH13ztcNGUlwqbztMLZ9_LHCZFzDCgsEVBl3LPHRaoambTHouVQbp9y4MsWrzRq1ygBHBnFxPoGGRKM0QLZg5bzBwkqYcEIkmdJIhCRWryxRbg6ZzmeoVBrkJw36A5F_13uMXB8tFEAWkAnJAomwhBcNM5IcdnZNdMkjJSQQ4kFer2_R2a6RfNfkZnEJvZhHksb89GOMZqNJbSQhmx0Hc-CgxYLEROgJNgPTwbZtZi4VaJWrmMc2ubGMvV5nVGrij08QrxaIRlW07BUGb3cRP7k0y9oXV8ks5BgGAwyPhoiuS0AOk0sK6Gmduz_fZuVSHtv2sE5c_P0mk3oEcarAYcskNhoiP_zzJcX5LJmQz62v1qhubnMzHcENRIg6HrpxRv6czng5w7tHO1Q6HoNXDVI9m43N19QO63ihFFJ2Onrf16By3Kb9-D_ePdwnqcqkinnq3TPed-vsbx6w-9cRE5pO23JIJZO0NIuqNYJglHa3iZif10jHw0imR3W3T4cQW0-Pqb48IBORsUyIAtrxGU9KLQQ9Qvx6hsy1AlJgxERa5cNrU8iqFGBntwbWmEk1RDauUz9t8-DBBql8ksN6n5W4wHJ2ggYD3ioWax_41Mo1JEVGEixOa13EzsjntG3juwpDf0w8ESEgyyxeXKBRNul3B-y97RJSA9y-cZmROaZugp5KszA_TSJloBkGcq_eIxKPYg4hG1cICD5z53P8U66gJ2VES-PzlQnmYpOEYhJryyniEYXtrRLncnGE3hm2C_LMdBItGMazfKr7JYpfXqNUPuHNs1Naisfte9c5PxUjKiYZjSQ2dlts91t8cmOB7a1jzhkhkBXEtjlG0ER2jnz0j89Tb_WptgcsJqPk8irlyoDHfxxwXLX4_elLjvoW2XwSIxVEVTT29i3c6GXki8Ulhk6Hy0Wfke_y6MkOz14ccW-1gCqdIC-mqbXm-eW3X0lNhbj9_TJGGizB47QjoighQnIHaXbOvX-438fsO4RTPpqh8PxpjTtrSyieS9kZk45Br11h7Ks8_7uErmssrxZRVY9cTkWwWsijkYdpumjiBK-fvqdQiJKe0DAtl74DxweHHLzZwwkYeFKSiZkMrhaitlem45lEYzobLxoIt74x_IWVDO_ftem1PI6O-wQCEgUhQGtsE8rGKVdtYukMnVYdVZEZDc4IaCJ3friEPRxS2u4hprJBYgioYYWlC3G-_W4WJepTkoa4IQHjXAJ9Mke3VsHpnZGOjVm6MEs4IhCMqIhKGGM6gawnYjSaQ4JegMW0QW9gE5WCeKJNcX6CoC6zt3vE8oUUmUyExKTA1sYZn306hWQPiEViYJvIVg9sPFBFTp0xTcfCFyAW0agNushnbWYKQRYuZmhVqkTUOJNRh0LBIBLWeb5ewjnp8j87B_hjVaSpRAAAAABJRU5ErkJggg";
 
     assertEquals("<p><img src=\"" + base64Img + "\" alt=\"\" /></p>\n",
@@ -63,6 +66,14 @@ public class MdRenderCapabilitiesTest {
 
     assertEquals("<h1>An Image</h1>\n<p><img src=\"" + base64Img + "\" alt=\"\" /></p>\n",
         md2html("# An Image\n\n![](" + base64Img + ")"));
+
+    String content = FileEncoder.contentAsBase64("https://upload.wikimedia.org/wikipedia/commons/d/dd/Accounting-icon.png");
+    assertTrue(content.startsWith("data:image/png;base64,"));
+
+    File img = new File(getClass().getResource("/Accounting-icon.png").toURI());
+    content = FileEncoder.contentAsBase64(img.getAbsolutePath());
+    assertTrue(content.startsWith("data:image/png;base64,"));
+
   }
 
   @Test
