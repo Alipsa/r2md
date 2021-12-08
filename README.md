@@ -209,6 +209,8 @@ See the [pom.xml](https://github.com/perNyfelt/r2md/blob/main/pom.xml) for more 
 
 # Version history
 
+### 1.0.2
+
 ### 1.0.1, 2021-12-08
 - add md.addPlot to allow more flexibility
 - update junit and maven enforcer plugin versions.
