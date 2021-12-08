@@ -164,31 +164,37 @@ md.content() will be: `![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE0AAAB
 ### Plots
 
 The embedded technique is also used for plots. Behind the scenes the plot is exported to a png file which is
-then embedded using the same technique as for md.imgEmbed(). Note that the function name for the plot
-(e.g. plot, barplot, hist etc.) is *separated* from the arguments of the function.
+then embedded using the same technique as for md.imgEmbed(). 
 Here is an example of a barplot:
 
 ```r
 md.clear()
-md.add("# Barplot")
-md.add(
-  barplot,
-  table(mtcars$vs, mtcars$gear),
-  main="Car Distribution by Gears and VS",
-  col=c("darkblue","red")
+md.add("# Plot")
+md.addPlot(
+  {
+    plot(mtcars$mpg ~ mtcars$hp)
+    abline(h = mean(mtcars$mpg))
+  }, 
+  width=350, 
+  alt="mtcars mpg ~ hp", 
+  attr=list(class="plot1", title="This is an important graph!"), 
+  height=400
 )
 ```
 
-However, there is an alternative way to plot, which is using the md.addPlot function. This function gives you
-more flexibility. It takes an anonymous code block `{ }` as the argument where you add all the plotting functions you need. 
-All additional argument goes to the `png()` function. Here is an example:
+Note that md.addPlot() takes an anonymous code block `{ }` as the argument where you add all the plotting functions you need. 
+All additional arguments except alt and attr (width and height in this case, I put them first and last to illustrate that the 
+placement is not important) goes to the `png()` function. 
 
-```r
-  md.addPlot({
-    plot(mtcars$mpg ~ mtcars$hp)
-    abline(h = mean(mtcars$mpg))
-  })
+The md.content() will return something like this for the above plot:
 ```
+# Plot
+
+![mtcars mpg ~ hp](data:image/png;base64,<long base64 string>){class="plot1" title="This is an important graph!"}
+
+```
+
+
 
 # Main 3:rd party libraries used
 

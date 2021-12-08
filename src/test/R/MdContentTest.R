@@ -127,12 +127,12 @@ test.plotToImage <- function() {
   md.addPlot({
     plot(mtcars$mpg ~ mtcars$hp)
     abline(h = mean(mtcars$mpg))
-  })
+  }, width=350, alt="mtcars mpg ~ hp", attr=list(class="plot1", title="This is an important graph!"), height=400)
   outFile <- paste0(getwd(), "/mtcars.html")
   write(md.asHtml(), outFile)
   print(paste("Wrote mtcars plot html to", outFile))
   assertThat(md.asHtml(), str.beginsWith("<p><img src=\"data:image/png;base64,"))
-  assertThat(md.asHtml(), str.endsWith("\" alt=\"\" /></p>\n"))
+  assertThat(md.asHtml(), str.endsWith("alt=\"mtcars mpg ~ hp\" class=\"plot1\" title=\"This is an important graph!\" /></p>\n"))
 }
 
 test.links <- function() {
