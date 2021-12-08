@@ -22,7 +22,7 @@ add the dependency to your dependency manager e.g.
 <dependency>
     <groupId>se.alipsa</groupId>
     <artifactId>r2md</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
@@ -201,7 +201,7 @@ The md.content() will return something like this for the above plot:
 - [Renjin](https://www.renjin.org/)
     The R implementation for the JVM for which this extension (package) is for.
 - [commons-io](https://commons.apache.org/proper/commons-io/)
-    Used for some IO tasks such as downloading the content of an URL
+    Used for some IO tasks such as downloading the content of a URL
 - [Flexmark](https://github.com/vsch/flexmark-java)
     Used to render markdown into html
   
@@ -209,7 +209,7 @@ See the [pom.xml](https://github.com/perNyfelt/r2md/blob/main/pom.xml) for more 
 
 # Version history
 
-### 1.0.1
+### 1.0.1, 2021-12-08
 - add md.addPlot to allow more flexibility
 - update junit and maven enforcer plugin versions.
 - Fix bug in md.imgEmbed for external resources, add additional tests
