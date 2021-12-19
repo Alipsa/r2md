@@ -168,6 +168,10 @@ md.renderHtml <- function(mdText) {
   .getMd2html()$render(mdText)
 }
 
+md.renderPdf <- function(mdText, filename) {
+  Md2Pdf$render(md.renderHtml(mdText), filename)
+}
+
 extAttributes <- function(attr, endString="") {
   if (!is.list(attr)) {
     return("")

@@ -209,6 +209,9 @@ See the [pom.xml](https://github.com/perNyfelt/r2md/blob/main/pom.xml) for more 
 
 # Version history
 
+### 1.0.3
+- add md.renderPdf() to enable export to a PDF
+
 ### 1.0.2, 2021-12-19
 - change the md.add generic to match `ANY` object and defer matching to the Markdown class
 - add support for prettier rendering of htest classes (e.g t.test output) similar to how it prints to the console
