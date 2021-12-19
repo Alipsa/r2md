@@ -30,6 +30,8 @@ Markdown <- setRefClass(
           mdString <- "\n"
         }
         mdString <- paste0(mdString, md.table(as.data.frame(as.array(prime)), ...))
+      } else if (class(prime) == "htest") {
+        mdString <- md.htest(prime, ...)
       } else {
         mdString <- paste0(as.character(prime), collapse = "")
       }
@@ -88,49 +90,12 @@ checkVar <- function() {
 
 setGeneric("md.add", function(x, ...) standardGeneric("md.add"))
 
-setMethod('md.add', signature("character"),
-  function(x) {
-    checkVar()
-    .r2mdEnv$md$add(x)
-  }
-)
-
-setMethod('md.add', signature("numeric"),
-  function(x) {
-    checkVar()
-    .r2mdEnv$md$add(x)
-  }
-)
-
-setMethod('md.add', signature("data.frame"),
-  function(x, ...) {
-    checkVar()
-    .r2mdEnv$md$add(x, ...)
-  }
-)
-
-setMethod('md.add', signature("table"),
-          function(x, ...) {
-            checkVar()
-            .r2mdEnv$md$add(x, ...)
-          }
-)
-
-setMethod('md.add', signature("matrix"),
-  function(x, ...) {
-    checkVar()
-    .r2mdEnv$md$add(x, ...)
-  }
-)
-
-# arguments that the generic dispatches on can’t be lazily evaluated (http://adv-r.had.co.nz/S4.html)
-# so we work around this by separating the function and its arguments, otherwise the signature to match on
-# would be the result of the plot/hist call e.g. numeric which is not what we want
-setMethod('md.add', signature("function"),
-  function(x, ...) {
-    checkVar()
-    .r2mdEnv$md$add(x, ...)
-  }
+# we to the matching in the Markdown class so accept any object to the md.add generic
+setMethod('md.add', signature("ANY"),
+   function(x, ...) {
+     checkVar()
+     .r2mdEnv$md$add(x, ...)
+   }
 )
 
 md.addPlot <- function(x, ...) {

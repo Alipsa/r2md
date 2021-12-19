@@ -209,3 +209,23 @@ test.md.new <- function() {
   md.new()$add(paste("As stated before, 2 + 5 * pi ≈", round(2 + 5 * pi)))
   assertThat(md.content(), equalTo("As stated before, 2 + 5 * pi ≈ 18\n"))
 }
+
+test.t.test <- function() {
+  mpg.at <- mtcars[mtcars$am == 0,]$mpg
+  mpg.mt <- mtcars[mtcars$am == 1,]$mpg
+  t <- t.test(mpg.at, mpg.mt)
+  md.new(t)
+
+  expected <- "### Welch Two Sample t-test
+
+data:  mpg.at and mpg.mt
+t = -3.767, df = 18.332, p-value = 0.001
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -11.28  -3.21
+sample estimates:
+mean of x: 17.1473684
+mean of y: 24.3923077"
+
+  assertThat(trimws(md.content()), equalTo(expected))
+}

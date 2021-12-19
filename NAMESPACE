@@ -3,6 +3,7 @@
 # see http://docs.renjin.org/en/latest/writing-renjin-extensions.html for details about the syntax
 
 import(methods)
+import(stats)
 importClass(se.alipsa.r2md.FileEncoder)
 importClass(se.alipsa.r2md.Md2Html)
 
@@ -21,6 +22,7 @@ export(md.content)
 export(md.asHtml)
 export(md.renderHtml)
 export(md.getInstance)
+export(md.htest)
 
 exportClasses(Markdown)
 

@@ -6,7 +6,7 @@
 
     <groupId>se.alipsa</groupId>
     <artifactId>r2md</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
 
     <name>Renjin markdown content creator</name>
     <description>Renjin R package to create markdown from R objects and functions</description>

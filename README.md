@@ -210,6 +210,8 @@ See the [pom.xml](https://github.com/perNyfelt/r2md/blob/main/pom.xml) for more 
 # Version history
 
 ### 1.0.2
+- change the md.add generic to match ANY object and defter matching to the Markdown class
+- add support for prettier htest (e.g t.test output)
 
 ### 1.0.1, 2021-12-08
 - add md.addPlot to allow more flexibility
