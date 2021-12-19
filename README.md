@@ -22,7 +22,7 @@ add the dependency to your dependency manager e.g.
 <dependency>
     <groupId>se.alipsa</groupId>
     <artifactId>r2md</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
@@ -209,7 +209,7 @@ See the [pom.xml](https://github.com/perNyfelt/r2md/blob/main/pom.xml) for more 
 
 # Version history
 
-### 1.0.2
+### 1.0.2, 2021-12-19
 - change the md.add generic to match ANY object and defter matching to the Markdown class
 - add support for prettier htest (e.g t.test output)
 
