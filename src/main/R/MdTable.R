@@ -18,7 +18,7 @@ md.table <- function(df, attr=NULL, nsmall=NULL) {
 
   if (is.null(attr) || is.na(attr)) {
     attr <- list ( class = "table" )
-  } else if (!"class" %in% names(attr) || !grepl("table", attr$class)) {
+  } else if (!"class" %in% names(attr) || !grepl("(?:^|\W)table(?:$|\W)", attr$class)) {
     attr$class <- trimws(paste(attr$class, "table"))
   }
   table <- paste0(table, extAttributes(attr, "\n"))
