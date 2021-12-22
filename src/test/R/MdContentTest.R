@@ -50,10 +50,10 @@ test.dataFrameToTable <- function() {
     "John Doe | 21000 | 2013-11-01 | 2020-01-10 00:00:00\n",
     "Peter Smith | 23400 | 2018-03-25 | 2020-04-12 12:10:13\n",
     "Jane Doe | 26800 | 2017-03-14 | 2020-10-06 10:00:05\n",
-    "{id=\"myTable\"}\n")
+    "{id=\"myTable\" class=\"table\"}\n")
   ))
   assertThat(md.renderHtml(content), equalTo(
-"<table id=\"myTable\">
+"<table id=\"myTable\" class=\"table\">
 <thead>
 <tr><th>employee</th><th>salary</th><th>startdate</th><th>endDate</th></tr>
 </thead>
@@ -83,7 +83,7 @@ test.dataFrameToTable <- function() {
     "--- | --- | --- | ---\n",
     "John Doe | 21000 | 2013-11-01 | 2020-01-10 00:00:00\n",
     "Peter Smith | 23400 | 2018-03-25 | 2020-04-12 12:10:13\n",
-    "Jane Doe | 26800 | 2017-03-14 | 2020-10-06 10:00:05\n\n")
+    "Jane Doe | 26800 | 2017-03-14 | 2020-10-06 10:00:05\n{class=\"table\"}\n\n")
   ))
 }
 
@@ -106,8 +106,10 @@ test.plotToImage <- function() {
   print(paste("Wrote barplot html to", outFile))
   assertThat(md.asHtml(), str.beginsWith("<h1>Barplot</h1>\n<p><img src=\"data:image/png;base64,"))
   assertThat(md.asHtml(), str.endsWith("\" alt=\"\" /></p>\n"))
+}
 
-  # Plot a histogram
+# Plot a histogram
+test.plotHistogram <- function() {
   md.clear()
   md.add(
     hist,
@@ -122,9 +124,11 @@ test.plotToImage <- function() {
 
   assertThat(md.asHtml(), str.beginsWith("<p><img src=\"data:image/png;base64,"))
   assertThat(md.asHtml(), str.endsWith("\" alt=\"\" /></p>\n"))
-  
+}
+
+test.plotWithLine <- function() {
   md.clear()
-  md.addPlot({
+  md.plot({
     plot(mtcars$mpg ~ mtcars$hp)
     abline(h = mean(mtcars$mpg))
   }, width=350, alt="mtcars mpg ~ hp", attr=list(class="plot1", title="This is an important graph!"), height=400)
@@ -133,6 +137,39 @@ test.plotToImage <- function() {
   print(paste("Wrote mtcars plot html to", outFile))
   assertThat(md.asHtml(), str.beginsWith("<p><img src=\"data:image/png;base64,"))
   assertThat(md.asHtml(), str.endsWith("alt=\"mtcars mpg ~ hp\" class=\"plot1\" title=\"This is an important graph!\" /></p>\n"))
+}
+
+test.summary <- function() {
+  md.clear()
+  md.summary(Orange)
+  assertThat(md.content(), equalTo('
+
+names | Tree | age | circumference
+--- | --- | --- | ---
+Min. | 7 |     118 |      30
+1st Qu. | 7 |     484 |    65.5
+Median | 7 |    1004 |     115
+Mean | 7 | 922.143 | 115.857
+3rd Qu. | 7 |    1372 |   161.5
+Max. | 7 |    1582 |     214
+{class="table"}
+
+'))
+  assertThat(md.asHtml(), equalTo(
+  '<table class="table">
+<thead>
+<tr><th>names</th><th>Tree</th><th>age</th><th>circumference</th></tr>
+</thead>
+<tbody>
+<tr><td>Min.</td><td>7</td><td>118</td><td>30</td></tr>
+<tr><td>1st Qu.</td><td>7</td><td>484</td><td>65.5</td></tr>
+<tr><td>Median</td><td>7</td><td>1004</td><td>115</td></tr>
+<tr><td>Mean</td><td>7</td><td>922.143</td><td>115.857</td></tr>
+<tr><td>3rd Qu.</td><td>7</td><td>1372</td><td>161.5</td></tr>
+<tr><td>Max.</td><td>7</td><td>1582</td><td>214</td></tr>
+</tbody>
+</table>
+'))
 }
 
 test.links <- function() {
@@ -178,7 +215,7 @@ test.matrix <- function() {
   #cat(md.content())
   #print(paste("test.matrix, html =", md.asHtml()))
   assertThat(md.asHtml(), equalTo("<h2>PlantGrowth weight</h2>
-<table>
+<table class=\"table\">
 <thead>
 <tr><th>weight</th><th>group</th></tr>
 </thead>

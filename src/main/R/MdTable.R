@@ -16,6 +16,11 @@ md.table <- function(df, attr=NULL, nsmall=NULL) {
   rows <- paste(apply(df, 1, paste, collapse=" | "), collapse="\n")
   table <- paste0(table, rows, "\n")
 
+  if (is.null(attr) || is.na(attr)) {
+    attr <- list ( class = "table" )
+  } else if (!"class" %in% names(attr) || !grepl("table", attr$class)) {
+    attr$class <- trimws(paste(attr$class, "table"))
+  }
   table <- paste0(table, extAttributes(attr, "\n"))
 
   return(table)

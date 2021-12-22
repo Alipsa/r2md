@@ -87,11 +87,12 @@ employee | salary | startdate | endDate
 John Doe | 21000 | 2013-11-01 | 2020-01-10 00:00:00
 Peter Smith | 23400 | 2018-03-25 | 2020-04-12 12:10:13
 Jane Doe | 26800 | 2017-03-14 | 2020-10-06 10:00:05
+{class="table"}
 
 ```
 ...and `md.asHtml()` will equal:
 ```html
-<table>
+<table class="table">
 <thead>
 <tr><th>employee</th><th>salary</th><th>startdate</th><th>endDate</th></tr>
 </thead>
@@ -170,7 +171,7 @@ Here is an example of a barplot:
 ```r
 md.clear()
 md.add("# Plot")
-md.addPlot(
+md.plot(
   {
     plot(mtcars$mpg ~ mtcars$hp)
     abline(h = mean(mtcars$mpg))
@@ -182,7 +183,7 @@ md.addPlot(
 )
 ```
 
-Note that md.addPlot() takes an anonymous code block `{ }` as the argument where you add all the plotting functions you need. 
+Note that md.plot() takes an anonymous code block `{ }` as the argument where you add all the plotting functions you need. 
 All additional arguments except alt and attr (width and height in this case, I put them first and last to illustrate that the 
 placement is not important) goes to the `png()` function. 
 
@@ -194,6 +195,15 @@ The md.content() will return something like this for the above plot:
 
 ```
 
+### Convenience methods
+
+#### md.summary()
+The md.summary provides a nice way to display a summary in tabular format. It does the following:
+```r
+  summaryDf <- do.call(cbind, lapply(x, summary))
+  summaryDf <- data.frame( names = row.names(summaryDf),summaryDf)
+  md.add(summaryDf, ...)
+```
 
 
 # Main 3:rd party libraries used
@@ -210,7 +220,11 @@ See the [pom.xml](https://github.com/perNyfelt/r2md/blob/main/pom.xml) for more 
 # Version history
 
 ### 1.0.3
-- add md.renderPdf() to enable export to a PDF
+- add md.renderPdf() to enable export to a PDF (it is pretty crude: you might have issues with overflowing margins
+  and non latin1 characters might be rendered as # instead.)
+- add class="table" to tables if not present
+- add md.plot as a better name for md.addPlot
+- add md.summary() to provide a nice way to get pretty summaries.
 
 ### 1.0.2, 2021-12-19
 - change the md.add generic to match `ANY` object and defer matching to the Markdown class
