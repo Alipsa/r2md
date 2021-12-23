@@ -16,10 +16,17 @@ md.table <- function(df, attr=NULL, nsmall=NULL) {
   rows <- paste(apply(df, 1, paste, collapse=" | "), collapse="\n")
   table <- paste0(table, rows, "\n")
 
+  if (!is.vector(attr)) {
+    attr <- NULL
+  }
   if (is.null(attr) || is.na(attr)) {
     attr <- list ( class = "table" )
-  } else if (!"class" %in% names(attr) || !grepl("(?:^|\W)table(?:$|\W)", attr$class)) {
-    attr$class <- trimws(paste(attr$class, "table"))
+  } else if (!TableMatcher$find(attr[["class"]])) {
+    existing <- ""
+    if(!is.null(attr["class"]) && "NULL" != attr["class"]) {
+      existing <- attr["class"]
+    }
+    attr["class"] <- trimws(paste(existing, "table"))
   }
   table <- paste0(table, extAttributes(attr, "\n"))
 

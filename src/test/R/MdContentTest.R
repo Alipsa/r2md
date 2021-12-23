@@ -38,7 +38,7 @@ test.dataFrameToTable <- function() {
   endDate <- as.POSIXct(c('2020-01-10 00:00:00', '2020-04-12 12:10:13', '2020-10-06 10:00:05'), tz='UTC' )
   df <- data.frame(employee, salary, startdate, endDate)
   ## hidden will not be added as an attribute since it is not named
-  content <- md.table(df, attr=list(id="myTable", "hidden"))
+  content <- md.table(df, attr=list(id="myTable", "hidden", class="some table-striped"))
   #outfile <- paste0(getwd(),"/outfile.md")
   #cat(content, file=outfile)
   #print(paste("test.dataFrameToTable, wrote", outfile))
@@ -50,10 +50,10 @@ test.dataFrameToTable <- function() {
     "John Doe | 21000 | 2013-11-01 | 2020-01-10 00:00:00\n",
     "Peter Smith | 23400 | 2018-03-25 | 2020-04-12 12:10:13\n",
     "Jane Doe | 26800 | 2017-03-14 | 2020-10-06 10:00:05\n",
-    "{id=\"myTable\" class=\"table\"}\n")
+    "{id=\"myTable\" class=\"some table-striped table\"}\n")
   ))
   assertThat(md.renderHtml(content), equalTo(
-"<table id=\"myTable\" class=\"table\">
+"<table id=\"myTable\" class=\"some table-striped table\">
 <thead>
 <tr><th>employee</th><th>salary</th><th>startdate</th><th>endDate</th></tr>
 </thead>
@@ -85,6 +85,34 @@ test.dataFrameToTable <- function() {
     "Peter Smith | 23400 | 2018-03-25 | 2020-04-12 12:10:13\n",
     "Jane Doe | 26800 | 2017-03-14 | 2020-10-06 10:00:05\n{class=\"table\"}\n\n")
   ))
+}
+
+test.tableAttributes <- function() {
+  dat <- data.frame(
+    col1 = c(1, 2, 3),
+    col2 = c("foo", "bar", "baz")
+  )
+
+  md.new(dat, attr=list(class="table"))
+  assertThat(md.content(), str.endsWith("{class=\"table\"}\n\n"))
+
+  md.new(dat, attr=list(class="table table-dark"))
+  assertThat(md.content(), str.endsWith("{class=\"table table-dark\"}\n\n"))
+
+  md.new(dat, attr=list(class="table-dark"))
+  assertThat(md.content(), str.endsWith("class=\"table-dark table\"}\n\n"))
+
+  md.new(dat, attr=list(class="btn input-group"))
+  assertThat(md.content(), str.endsWith("class=\"btn input-group table\"}\n\n"))
+
+  md.new(dat, attr=list(class="btn input-group table"))
+  assertThat(md.content(), str.endsWith("{class=\"btn input-group table\"}\n\n"))
+
+  md.new(dat, attr=list(class="btn table input-group"))
+  assertThat(md.content(), str.endsWith("{class=\"btn table input-group\"}\n\n"))
+
+  md.new(dat, attr=list(class="btn table2 input-group"))
+  assertThat(md.content(), str.endsWith("{class=\"btn table2 input-group table\"}\n\n"))
 }
 
 test.plotToImage <- function() {
