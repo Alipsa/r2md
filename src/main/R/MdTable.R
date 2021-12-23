@@ -21,9 +21,7 @@ md.table <- function(df, attr=NULL, nsmall=NULL) {
   }
   if (is.null(attr) || is.na(attr)) {
     attr <- list ( class = "table" )
-  }
-        # alternative: else if (!TableMatcher$find(attr[["class"]])) {
-  else if (!findWord('table', attr[["class"]])) {
+  } else if (!findWord('table', attr[["class"]])) {
     existing <- ""
     if(!is.null(attr["class"]) && "NULL" != attr["class"]) {
       existing <- attr["class"]
@@ -36,6 +34,7 @@ md.table <- function(df, attr=NULL, nsmall=NULL) {
 }
 
 # Renjin does not support negative lookahead so we split and match with %in% instead
+# see TableMatcher.java for an equivalent implementation
 findWord <- function(word, attrString) {
   if (!is.character(attrString)) {
     return(FALSE)
