@@ -219,6 +219,8 @@ See the [pom.xml](https://github.com/perNyfelt/r2md/blob/main/pom.xml) for more 
 
 # Version history
 
+### 1.0.4
+
 ### 1.0.3, 2021-12-27
 - add md.renderPdf() to enable export to a PDF (it is pretty crude: you might have issues with overflowing margins
   and non latin1 characters might be rendered as # instead.)
