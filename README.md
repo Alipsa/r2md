@@ -22,7 +22,7 @@ add the dependency to your dependency manager e.g.
 <dependency>
     <groupId>se.alipsa</groupId>
     <artifactId>r2md</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 
@@ -219,7 +219,7 @@ See the [pom.xml](https://github.com/perNyfelt/r2md/blob/main/pom.xml) for more 
 
 # Version history
 
-### 1.0.3
+### 1.0.3, 2021-12-27
 - add md.renderPdf() to enable export to a PDF (it is pretty crude: you might have issues with overflowing margins
   and non latin1 characters might be rendered as # instead.)
 - add class="table" to tables if not present
