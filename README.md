@@ -219,6 +219,8 @@ See the [pom.xml](https://github.com/perNyfelt/r2md/blob/main/pom.xml) for more 
 
 # Version history
 
+### 1.0.5
+
 ### 1.0.4, 2022-08-16
 - add automatic module name to manifest
 - upgrade maven plugins
