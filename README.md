@@ -223,6 +223,7 @@ See the [pom.xml](https://github.com/perNyfelt/r2md/blob/main/pom.xml) for more 
 - add automatic module name to manifest
 - upgrade maven plugins
 - Add explicit dependency on ic4j to force upgrade to non CVE affected version
+- require jdk 11
 
 ### 1.0.3, 2021-12-27
 - add md.renderPdf() to enable export to a PDF (it is pretty crude: you might have issues with overflowing margins
